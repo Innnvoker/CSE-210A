@@ -1,10 +1,6 @@
 package myPackage;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.StringTokenizer;
-//import myPackage.MathTokenize;
-//import myPackage.NotationConverter;
-//import myPackage.SyntaxTree;
 
 public class assignmentOne{
 
@@ -13,35 +9,19 @@ public class assignmentOne{
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
             String[] input = line.split(operator.space);
-            AST ast = new AST();
-            assignmentOne ass = new assignmentOne();
-            ast.root = ass.parseString(input);
-
-            System.out.println(ast.root.left.val);
-            System.out.println(ast.root.left.key);
-
-            System.out.println(ast.root.val);
-            System.out.println(ast.root.key);
-
-            System.out.println(ast.root.right.val);
-            System.out.println(ast.root.right.key);
-
-//            int res = ass.calculate(ast.root);
-//            System.out.println(res);
-//            ass.printTree(ast.root);
-
-            //StringTokenizer str = new StringTokenizer(line);
-
-//            while (str.hasMoreElements()) {
-//                String curr = str.nextToken();
-//                if (curr.equals(operator.plus)) {
-//                    System.out.println(curr);
-//                }
-//            }
+            assignmentOne fun = new assignmentOne();
+            AST ast= fun.parser(fun.parseString(input));
+            int res = fun.eval(ast);
+            System.out.println(res);
         }
         scan.close();
     }
 
+    public AST parser(Node node) {
+        AST ast = new AST();
+        ast.root = node;
+        return ast;
+    }
 
     public Node parseString(String[] input) {
         Node newNode = new Node();
@@ -55,19 +35,20 @@ public class assignmentOne{
                 newNode.key = str;
                 newNode.val = 0;
                 String[] leftStr = Arrays.copyOfRange(input, 0, i);
-                String[] rightStr = Arrays.copyOfRange(input, i+1, input.length);
-
-//                System.out.println(Arrays.toString(leftStr));
-//                System.out.println(Arrays.toString(rightStr));
-
+                String[] rightStr = Arrays.copyOfRange(input, i + 1, input.length);
                 if (leftStr.length > 0) {
                     newNode.left = parseString(leftStr);
                 }
                 if (rightStr.length > 0) {
                     newNode.right = parseString(rightStr);
                 }
+                return newNode;
             }
-            else if (str.equals(operator.multi) || str.equals(operator.divide)) {
+        }
+
+        for (int i = 0; i < input.length; i++) {
+            String str = input[i];
+            if (str.equals(operator.multi) || str.equals(operator.divide)) {
                 newNode.key = str;
                 newNode.val = 0;
                 String[] leftStr = Arrays.copyOfRange(input, 0, i);
@@ -78,18 +59,21 @@ public class assignmentOne{
                 if (rightStr.length > 0) {
                     newNode.right = parseString(rightStr);
                 }
+                return newNode;
             }
         }
         return newNode;
     }
 
+    public int eval(AST ast) {
+        return calculate(ast.root);
+    }
+
     public int calculate(Node currNode) {
         if (currNode.key == null) {
-            System.out.println(currNode.val);
             return currNode.val;
         }
         if (currNode.key.equals(operator.plus)) {
-            System.out.println("+");
             currNode.val = calculate(currNode.left) + calculate(currNode.right);
             return currNode.val;
         }
@@ -98,7 +82,6 @@ public class assignmentOne{
             return currNode.val;
         }
         else if (currNode.key.equals(operator.multi)) {
-            System.out.println("*");
             currNode.val = calculate(currNode.left) * calculate(currNode.right);
             return currNode.val;
         }
@@ -127,25 +110,7 @@ public class assignmentOne{
         public static String leftPar = "(";
         public static String rightPar = ")";
     }
-
-
-
-    public int add(Node node) {
-        return node.left.val + node.right.val;
-    }
-    public int minus(Node node) {
-        return node.left.val - node.right.val;
-    }
-    public int mul(Node node) {
-        return node.left.val * node.right.val;
-    }
-    public int div(Node node) {
-        return node.left.val / node.right.val;
-    }
-
 }
-
-
 
 class Node {
     String key;
@@ -172,6 +137,3 @@ class AST {
         root = null;
     }
 }
-
-
-
