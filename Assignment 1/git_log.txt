@@ -1,3 +1,21 @@
+commit 65170252b9e88470cc1beefdfa2342682a6f4663
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:06:30 2020 -0700
+
+    fix readme
+
+commit 24cedcf7d5e82b89da0f2dcf2480dce52a50cf1b
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:02:46 2020 -0700
+
+    finished
+
+commit 884439367a30ae112d019263da57359d2644969f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:52:40 2020 -0700
+
+    finished
+
 commit 846ed191810f1b5834cc5f758de8b74beaf55dc6
 Author: Yu Ji <jessejiyu@outlook.com>
 Date:   Fri Apr 10 17:51:04 2020 -0700
