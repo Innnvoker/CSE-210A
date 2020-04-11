@@ -1,20 +1,11 @@
-JFLAGS=-g
-JC=javac
-JVM=java
-FILE=
+JAVAC=javac
+sources = $(wildcard *.java)
+classes = $(sources:.java=.class)
 
-.SUFFIXES: .java.class
+all: $(classes)
 
-.java.class: $(JC) $(JFLAGS) $*.java
+clean :
+	rm -f *.class
 
-CLASSES= assignmentOne.java
-
-MAIN= assignmentOne
-
-default:  classes
-
-classes: $(CLASSES:.java=.class)
-
-run: $(MAIN).class $(JVM) $(MAIN)
-
-clean: $(RM) *.class
+%.class : %.java
+	$(JAVAC) $<
