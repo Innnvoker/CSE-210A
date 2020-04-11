@@ -2,3 +2,5 @@
 
 make
 ./bin/bats tests/
+
+read
