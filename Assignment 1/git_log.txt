@@ -1,0 +1,54 @@
+commit 846ed191810f1b5834cc5f758de8b74beaf55dc6
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:51:04 2020 -0700
+
+    finished
+
+commit 3907f7a33303e08ab801db8e239528fcb6c479ad
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Fri Apr 10 17:14:06 2020 -0700
+
+    Update README.md
+
+commit f242d13d448602c62a96d119bfbd13141e149ec0
+Merge: b7baa3a bd9ae86
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:12:08 2020 -0700
+
+    almost done
+
+commit b7baa3a818e686b7ce77d1c2f60282b56269d501
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:10:35 2020 -0700
+
+    almost finished
+
+commit bd9ae8615bc5bf58ebc82936cc386c7439b93ee3
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Fri Apr 10 11:05:49 2020 -0700
+
+    Update README.md
+
+commit 8092988abee61bd8a22e8343e660aebdff21864d
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 11:04:02 2020 -0700
+
+    program is finished
+
+commit 04d46e6f818d406b3479d55a09cd2aa1b04e3cbd
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 01:46:02 2020 -0700
+
+    addition is working now
+
+commit f19409f98db70cf18c9285835512cf001f9a739f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu Apr 9 19:23:30 2020 -0700
+
+    setup
+
+commit 640870aff32c55450d7da667f0d903db2f5b87dd
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Thu Apr 9 17:59:23 2020 -0700
+
+    Initial commit
