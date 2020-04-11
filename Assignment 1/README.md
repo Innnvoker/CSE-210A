@@ -10,3 +10,4 @@ Screenshots of tests are in the pdf file.
 
 Substraction was added as the additional feature.
 
+Type "java myPackage.assignmentOne" in the command line will run the script.
