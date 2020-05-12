@@ -1,7 +1,7 @@
 import numpy as np
 
 class Node:
-    def __init__(self, key = None, num=0, tf=True, tp=None):
+    def __init__(self, key=None, num=0, tf=True, tp=None):
         self.left = None
         self.right = None
         self.num = num
@@ -21,8 +21,6 @@ add = "+"
 minus = "-"
 multi = "*"
 equal = ":="
-he = "∧"
-huo = "∨"
 no = "¬"
 
 
@@ -44,12 +42,6 @@ def split(text):
         nameVar(text)
 
 
-# def parseSub(text):
-#     if text[0] == "if":
-#         ifthen(text)
-#     elif text[0] == "while":
-#         whiledo(text)
-
 def parse(text):
     global outVars
     if text[0] == "(" and text[len(text)-1] == ")":
@@ -61,34 +53,46 @@ def parse(text):
             return True
         else:
             return False
-    if len(text) == 3 and text[1] == ":=":
+    if text[1] == ":=":
         nameVar(text)
-    if len(text) == 3 and text[1] == "=":
-        var = text[:text.index("=")][0]
-        val = text[text.index("=") + 1:][0]
-        outVars = np.transpose(np.asarray(outVars))
-        if var not in outVars[0]:
-            outVars = np.transpose(outVars)
-            outVars = outVars.tolist()
-            return val == 0
-        else:
-            id = np.where(outVars[0] == var)
-            val_stored = outVars[1][id]
-            outVars = np.transpose(outVars)
-            outVars = outVars.tolist()
-            return val == val_stored
-    return True
-    # if he in text or huo in text:
 
+    if "∨" in text:
+        return parse(text[:text.index("∨")]) or parse(text[text.index("∨")+1:])
+    if "∧" in text:
+        return parse(text[:text.index("∧")]) and parse(text[text.index("∧")+1:])
+
+    if len(text) == 3 and "<" in text and is_int(text[0]) and is_int(text[2]):
+        return int(text[0]) < int(text[2])
+    if len(text) == 3 and ">" in text and is_int(text[0]) and is_int(text[2]):
+        return int(text[0]) > int(text[2])
+    if len(text) == 3 and "=" in text and is_int(text[0]) and is_int(text[2]):
+        return int(text[0]) == int(text[2])
+
+    if len(text) == 3 and ("<" or ">") in text:
+        return compare(text[0], text[2], text[1])
+
+
+    if text[1] == "=":
+        var = text[:text.index("=")][0]
+        val = text[text.index("=") + 1:]
+        if len(val) == 1:
+            val = val[0]
+        if len(val) == 3 and is_int(val[0]) and is_int(val[2]):
+            if val[1] == add:
+                val = int(val[0]) + int(val[2])
+            elif val[1] == minus:
+                val = int(val[0]) - int(val[2])
+            elif val[1] == multi:
+                val = int(val[0]) * int(val[2])
+
+        return compare(var, val, "=")
+    return True
 
 
 def ifthen(text):
     arrif = text[text.index("if")+1:text.index("then")]
     arrthen = text[text.index("then")+1:text.index("else")]
     arrelse = text[text.index("else")+1:]
-    # print(arrif)
-    # print(arrthen)
-    # print(arrelse)
     ast = Node(key=arrif, tp="ifthenP")
     ast.left = Node(key=arrthen, tp="ifthenL")
     ast.right = Node(key=arrelse, tp="ifthenR")
@@ -105,18 +109,21 @@ def whiledo(text):
 
 
 def parse_tree(curr):
+    global outVars
     if curr.tp == "ifthenP":
-        parse(curr.key)
+        curr.tf = parse(curr.key)
         if curr.tf:
             parse(curr.left.key)
         else:
             parse(curr.right.key)
     if curr.tp == "whiledoP":
-        parse(curr.left.key)
+        curr.left.tf = parse(curr.left.key)
         while curr.left.tf:
-            parse(curr.right.key)
-
-
+            before = outVars
+            curr.left.tf = parse(curr.right.key)
+            after = outVars
+            if before == after:
+                break
 
 
 def clear():
@@ -127,20 +134,18 @@ def clear():
 def nameVar(text):
     global outVars
     var = text[:text.index(":=")][0]
-    val = text[text.index(":=")+1:][0]
-    # print("var:", var)
-    # print("val:", val)
-    outVars = np.transpose(np.asarray(outVars))
-    # print("outVars:", outVars)
-    if len(outVars) == 0 or var not in outVars[0]:
-        outVars = np.transpose(outVars)
-        outVars = outVars.tolist()
-        outVars.append([var, int(val)])
-    else:
-        id = np.where(outVars[0] == var)
-        outVars[1][id] = val
-        outVars = np.transpose(outVars)
-        outVars = outVars.tolist()
+    val = text[text.index(":=")+1:]
+    if len(val) == 1:
+        val = val[0]
+    if len(val) == 3:
+        if val[1] == add:
+            val = int(val[0]) + int(val[2])
+        elif val[1] == minus:
+            val = int(val[0]) - int(val[2])
+        elif val[1] == multi:
+            val = int(val[0]) * int(val[2])
+    check_exist(var, val)
+
 
 
 def divString(text):
@@ -159,7 +164,6 @@ def divString(text):
             count = count - 1
 
 
-
 def printAnw():
     output = ""
     if outVars:
@@ -167,6 +171,77 @@ def printAnw():
             output += var[0] + " → " + str(var[1]) + ", "
     output = output[:-2]
     return output
+
+
+def is_int(string):
+    try:
+        int(string)
+        return True
+    except ValueError:
+        return False
+
+
+def check_exist(var, val):
+    global outVars
+    outVars = np.transpose(np.asarray(outVars))
+    if len(outVars) == 0 or var not in outVars[0]:
+        outVars = np.transpose(outVars)
+        outVars = outVars.tolist()
+        outVars.append([var, val])
+    else:
+        id = np.where(outVars[0] == var)
+        outVars[1][id] = val
+        outVars = np.transpose(outVars)
+        outVars = outVars.tolist()
+
+
+def compare(a, b, sign):
+    global outVars
+    outVars = np.transpose(np.asarray(outVars))
+
+    if is_int(a):
+        var = b
+    else:
+        var = a
+
+    if len(outVars) == 0 or var not in outVars[0]:
+        outVars = np.transpose(outVars)
+        outVars = outVars.tolist()
+        if is_int(a):
+            if sign == "<":
+                return int(a) < 0
+            elif sign == ">":
+                return int(a) > 0
+            elif sign == "=":
+                return 0 == int(a)
+        else:
+            if sign == "<":
+                return 0 < int(b)
+            elif sign == ">":
+                return 0 > int(b)
+            elif sign == "=":
+                return 0 == int(b)
+    else:
+        id = np.where(outVars[0] == var)
+        val = outVars[1][id][0]
+        outVars = np.transpose(outVars)
+        outVars = outVars.tolist()
+        if is_int(a):
+            if sign == "<":
+                return int(a) < int(val)
+            elif sign == ">":
+                return int(a) > int(val)
+            elif sign == "=":
+                return int(val) == int(a)
+        else:
+            if sign == "<":
+                return int(val) < int(b)
+            elif sign == ">":
+                return int(val) > int(b)
+            elif sign == "=":
+                return int(val) == int(b)
+    return False
+
 
 def main():
     text = input().split()
