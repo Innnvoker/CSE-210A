@@ -1,0 +1,275 @@
+commit d1e257c97d33a8f26b251e7ea582478739e59adf
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 13 23:47:36 2020 -0700
+
+    done assignment 2
+
+ Assignment 2/README.md       |  15 ++++
+ Assignment 2/Test Report.pdf | Bin 0 -> 50131 bytes
+ Assignment 2/makefile        |   2 +
+ Assignment 2/test.sh         |   4 +
+ Assignment 2/tests/new.bats  |  21 +++++
+ Assignment 2/while           |   3 +
+ Assignment 2/while.py        | 179 ++++++++++++++++++++++++++++++-------------
+ 7 files changed, 169 insertions(+), 55 deletions(-)
+
+commit ec20a5fb8b53107ac44ff576b50b6b6e0ef3e55d
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Tue May 12 19:15:32 2020 -0700
+
+    medium 0.9
+
+ Assignment 2/while.py | 126 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 70 insertions(+), 56 deletions(-)
+
+commit 2c337bd2e17810c5acee4d3c859c91ffb13b7560
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Tue May 12 00:03:45 2020 -0700
+
+    easy done
+
+ Assignment 2/while.py | 171 ++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 123 insertions(+), 48 deletions(-)
+
+commit 8c3b68793adf02943f36c9f64b93218f2e6c7e86
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 6 20:46:34 2020 -0700
+
+    easy cases
+
+ Assignment 2/while.py | 165 ++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 126 insertions(+), 39 deletions(-)
+
+commit 69f62669124937c18402506a506b10dd525985a0
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed Apr 22 15:27:49 2020 -0700
+
+    split the input
+
+ Assignment 2/while.py | 94 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 89 insertions(+), 5 deletions(-)
+
+commit 7699ca9c6134346ce525bd7f920929286aaae59a
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed Apr 22 09:08:50 2020 -0700
+
+    start
+
+ Assignment 1/ass1/.idea/.gitignore                 |   2 +
+ Assignment 1/ass1/.idea/misc.xml                   |   6 +
+ Assignment 1/ass1/.idea/modules.xml                |   8 +
+ Assignment 1/ass1/.idea/uiDesigner.xml             | 124 +++++++
+ Assignment 1/ass1/.idea/vcs.xml                    |   6 +
+ Assignment 1/ass1/Assignment 1.iml                 |  11 +
+ .../ass1/out/production/Assignment 1/.gitignore    |   1 +
+ Assignment 1/ass1/src/myPackage/AST.class          | Bin 0 -> 376 bytes
+ Assignment 1/ass1/src/myPackage/Node.class         | Bin 0 -> 484 bytes
+ .../src/myPackage/assignmentOne$operator.class     | Bin 0 -> 675 bytes
+ .../ass1/src/myPackage/assignmentOne.class         | Bin 0 -> 2668 bytes
+ Assignment 1/ass1/src/myPackage/assignmentOne.java | 141 ++++++++
+ Assignment 2/bin/bats                              |  44 +++
+ Assignment 2/libexec/bats-core/bats                | 171 +++++++++
+ Assignment 2/libexec/bats-core/bats-exec-suite     | 114 ++++++
+ Assignment 2/libexec/bats-core/bats-exec-test      | 387 +++++++++++++++++++++
+ .../libexec/bats-core/bats-format-tap-stream       | 183 ++++++++++
+ Assignment 2/libexec/bats-core/bats-preprocess     |  58 +++
+ Assignment 2/tests/easy.bats                       |  73 ++++
+ Assignment 2/tests/hard.bats                       |  74 ++++
+ Assignment 2/tests/harness.bash                    |  13 +
+ Assignment 2/tests/medium.bats                     |  61 ++++
+ Assignment 2/while.py                              |   8 +
+ 23 files changed, 1485 insertions(+)
+
+commit b6a6ab319c2bfa0a691c9e7a12acfe0ac8a9d91c
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:07:08 2020 -0700
+
+    update gitlog
+
+ Assignment 1/git_log.txt | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+commit 65170252b9e88470cc1beefdfa2342682a6f4663
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:06:30 2020 -0700
+
+    fix readme
+
+ Assignment 1/README.md | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 24cedcf7d5e82b89da0f2dcf2480dce52a50cf1b
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:02:46 2020 -0700
+
+    finished
+
+ Assignment 1/README.md        |   5 +++++
+ Assignment 1/Tests report.pdf | Bin 29834 -> 23710 bytes
+ Assignment 1/test.sh          |   2 ++
+ 3 files changed, 7 insertions(+)
+
+commit 884439367a30ae112d019263da57359d2644969f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:52:40 2020 -0700
+
+    finished
+
+ Assignment 1/README.md   |  4 ++--
+ Assignment 1/git_log.txt | 54 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+), 2 deletions(-)
+
+commit 846ed191810f1b5834cc5f758de8b74beaf55dc6
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:51:04 2020 -0700
+
+    finished
+
+ Assignment 1/.idea/.gitignore                      |   2 -
+ Assignment 1/.idea/misc.xml                        |   6 -
+ Assignment 1/.idea/modules.xml                     |   8 --
+ Assignment 1/.idea/uiDesigner.xml                  | 124 ------------------
+ Assignment 1/.idea/vcs.xml                         |   6 -
+ Assignment 1/Assignment 1.iml                      |  11 --
+ Assignment 1/New Microsoft Word Document.docx      |   0
+ Assignment 1/Tests report.pdf                      | Bin 0 -> 29834 bytes
+ Assignment 1/assignmentOne.class                   | Bin 2668 -> 0 bytes
+ Assignment 1/makefile                              |  25 ++--
+ .../out/production/Assignment 1/.gitignore         |   1 -
+ .../production/Assignment 1/myPackage/AST.class    | Bin 515 -> 0 bytes
+ .../production/Assignment 1/myPackage/Node.class   | Bin 581 -> 0 bytes
+ .../myPackage/assignmentOne$operator.class         | Bin 758 -> 0 bytes
+ .../Assignment 1/myPackage/assignmentOne.class     | Bin 3306 -> 0 bytes
+ Assignment 1/src/myPackage/AST.class               | Bin 376 -> 0 bytes
+ Assignment 1/src/myPackage/Node.class              | Bin 484 -> 0 bytes
+ .../src/myPackage/assignmentOne$operator.class     | Bin 675 -> 0 bytes
+ Assignment 1/src/myPackage/assignmentOne.class     | Bin 2668 -> 0 bytes
+ Assignment 1/src/myPackage/assignmentOne.java      | 141 ---------------------
+ Assignment 1/~$w Microsoft Word Document.docx      | Bin 162 -> 0 bytes
+ 21 files changed, 8 insertions(+), 316 deletions(-)
+
+commit 3907f7a33303e08ab801db8e239528fcb6c479ad
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Fri Apr 10 17:14:06 2020 -0700
+
+    Update README.md
+
+ Assignment 1/README.md | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+commit f242d13d448602c62a96d119bfbd13141e149ec0
+Merge: b7baa3a bd9ae86
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:12:08 2020 -0700
+
+    almost done
+
+commit b7baa3a818e686b7ce77d1c2f60282b56269d501
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:10:35 2020 -0700
+
+    almost finished
+
+ Assignment 1/.idea/misc.xml                        |   2 +-
+ Assignment 1/New Microsoft Word Document.docx      |   0
+ Assignment 1/README.md                             |   7 +-
+ Assignment 1/arith                                 |   2 +
+ Assignment 1/assignmentOne.class                   | Bin 0 -> 2668 bytes
+ Assignment 1/assignmentOne.java                    | 141 ++++++++
+ Assignment 1/bin/bats                              |  44 +++
+ Assignment 1/libexec/bats-core/bats                | 171 +++++++++
+ Assignment 1/libexec/bats-core/bats-exec-suite     | 114 ++++++
+ Assignment 1/libexec/bats-core/bats-exec-test      | 387 +++++++++++++++++++++
+ .../libexec/bats-core/bats-format-tap-stream       | 183 ++++++++++
+ Assignment 1/libexec/bats-core/bats-preprocess     |  58 +++
+ Assignment 1/makefile                              |  20 ++
+ Assignment 1/myPackage/AST.class                   | Bin 0 -> 376 bytes
+ Assignment 1/myPackage/Node.class                  | Bin 0 -> 484 bytes
+ .../myPackage/assignmentOne$operator.class         | Bin 0 -> 675 bytes
+ Assignment 1/myPackage/assignmentOne.class         | Bin 0 -> 2668 bytes
+ Assignment 1/myPackage/assignmentOne.java          | 141 ++++++++
+ .../out/production/Assignment 1/.gitignore         |   1 +
+ .../production/Assignment 1/myPackage/AST.class    | Bin 515 -> 515 bytes
+ .../production/Assignment 1/myPackage/Node.class   | Bin 581 -> 581 bytes
+ .../myPackage/assignmentOne$operator.class         | Bin 758 -> 758 bytes
+ .../Assignment 1/myPackage/assignmentOne.class     | Bin 3388 -> 3306 bytes
+ Assignment 1/src/myPackage/AST.class               | Bin 0 -> 376 bytes
+ Assignment 1/src/myPackage/Node.class              | Bin 0 -> 484 bytes
+ .../src/myPackage/assignmentOne$operator.class     | Bin 0 -> 675 bytes
+ Assignment 1/src/myPackage/assignmentOne.class     | Bin 0 -> 2668 bytes
+ Assignment 1/src/myPackage/assignmentOne.java      |   2 +
+ Assignment 1/test.sh                               |   4 +
+ Assignment 1/tests/easy.bats                       |  81 +++++
+ Assignment 1/tests/harness.bash                    |   7 +
+ Assignment 1/tests/medium.bats                     |  41 +++
+ Assignment 1/tests/selftest.bats                   |  21 ++
+ Assignment 1/~$w Microsoft Word Document.docx      | Bin 0 -> 162 bytes
+ 34 files changed, 1424 insertions(+), 3 deletions(-)
+
+commit bd9ae8615bc5bf58ebc82936cc386c7439b93ee3
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Fri Apr 10 11:05:49 2020 -0700
+
+    Update README.md
+
+ Assignment 1/README.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 8092988abee61bd8a22e8343e660aebdff21864d
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 11:04:02 2020 -0700
+
+    program is finished
+
+ Assignment 1/README.md                             |   3 +
+ .../production/Assignment 1/myPackage/AST.class    | Bin 515 -> 515 bytes
+ .../production/Assignment 1/myPackage/Node.class   | Bin 581 -> 581 bytes
+ .../myPackage/assignmentOne$operator.class         | Bin 758 -> 758 bytes
+ .../Assignment 1/myPackage/assignmentOne.class     | Bin 3375 -> 3388 bytes
+ Assignment 1/src/myPackage/assignmentOne.java      |  82 ++++++---------------
+ 6 files changed, 25 insertions(+), 60 deletions(-)
+
+commit 04d46e6f818d406b3479d55a09cd2aa1b04e3cbd
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 01:46:02 2020 -0700
+
+    addition is working now
+
+ Assignment 1/.idea/vcs.xml                         |   2 +-
+ Assignment 1/CSE-210A/README.md                    |   1 -
+ .../production/Assignment 1/myPackage/AST.class    | Bin 0 -> 515 bytes
+ .../Assignment 1/myPackage/BinaryTree.class        | Bin 529 -> 0 bytes
+ .../production/Assignment 1/myPackage/Node.class   | Bin 484 -> 581 bytes
+ .../myPackage/assignmentOne$operator.class         | Bin 755 -> 758 bytes
+ .../Assignment 1/myPackage/assignmentOne.class     | Bin 1051 -> 3375 bytes
+ Assignment 1/src/myPackage/assignmentOne.java      | 136 ++++++++++++++++++---
+ 8 files changed, 119 insertions(+), 20 deletions(-)
+
+commit f19409f98db70cf18c9285835512cf001f9a739f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu Apr 9 19:23:30 2020 -0700
+
+    setup
+
+ Assignment 1/.idea/.gitignore                      |   2 +
+ Assignment 1/.idea/misc.xml                        |   6 +
+ Assignment 1/.idea/modules.xml                     |   8 ++
+ Assignment 1/.idea/uiDesigner.xml                  | 124 +++++++++++++++++++++
+ Assignment 1/.idea/vcs.xml                         |   6 +
+ Assignment 1/Assignment 1.iml                      |  11 ++
+ Assignment 1/CSE-210A/README.md                    |   1 +
+ .../Assignment 1/myPackage/BinaryTree.class        | Bin 0 -> 529 bytes
+ .../production/Assignment 1/myPackage/Node.class   | Bin 0 -> 484 bytes
+ .../myPackage/assignmentOne$operator.class         | Bin 0 -> 755 bytes
+ .../Assignment 1/myPackage/assignmentOne.class     | Bin 0 -> 1051 bytes
+ Assignment 1/src/myPackage/assignmentOne.java      |  77 +++++++++++++
+ 12 files changed, 235 insertions(+)
+
+commit 640870aff32c55450d7da667f0d903db2f5b87dd
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Thu Apr 9 17:59:23 2020 -0700
+
+    Initial commit
+
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
