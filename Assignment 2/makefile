@@ -1,2 +1,1 @@
-a:while.py
-	chmod +x while
+while.py : while

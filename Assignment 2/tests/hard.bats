@@ -57,7 +57,7 @@ load harness
 }
 
 @test "hard-15" {
-  check 'if ( y * 4 < -1 - x ∧ - 1 = 0 + y) then z := ( -1 - -1 ) * -4 else z := 2 * -4 ; if ( y- -3 = y * z ∨ n * y < 1 * 2) then skip else if ( 1 < 0 - x ∨ true ) then x := y + -4 else y:= -4 * y' '{z → -8}'
+  check 'if ( y * 4 < -1 - x ∧ - 1 = 0 + y ) then z := ( -1 - -1 ) * -4 else z := 2 * -4 ; if ( y- -3 = y * z ∨ n * y < 1 * 2 ) then skip else if ( 1 < 0 - x ∨ true ) then x := y + -4 else y:= -4 * y' '{z → -8}'
 }
 
 
