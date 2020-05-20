@@ -22,14 +22,22 @@ function treeContains<T>(tree:Tree<T>, element:T):bool
     case Node(leftTree, rightTree, x) => treeContains(leftTree, element) || treeContains(rightTree, element) || x == element
 }
 
-// function listContains<T>(xs:List<T>, element:T):bool
-// {
-	
-// }
+function listContains<T>(xs:List<T>, element:T):bool
+{
+	match xs
+    case Nil => false
+    case Cons(x, xs') => listContains(xs', element) || x == element
+}
 
 
-// lemma sameElements<T>(tree:Tree<T>, element:T)
-// ensures treeContains(tree, element) <==> listContains(flatten(tree), element)
-// {
-	
-// }
+lemma sameElements<T>(tree:Tree<T>, element:T)
+ensures treeContains(tree, element) <==> listContains(flatten(tree), element)
+{
+	match tree
+        case Leaf => {}
+        case Node(leftTree, rightTree, x) => 
+        {
+            sameElements(leftTree, element)
+            sameElements(rightTree, element)
+        }
+}
