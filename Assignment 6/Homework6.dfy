@@ -47,5 +47,15 @@ ensures treeContains(tree, element) <==> listContains(flatten(tree), element)
             sameElements(leftTree, x);
             sameElements(rightTree, x);
             appendListContains(flatten(leftTree), flatten(rightTree), element);
+
+            calc { treeContains(tree, element);
+                == treeContains(Node(leftTree, rightTree, x), element);
+                == treeContains(leftTree, element) || treeContains(rightTree, element) || x == element;
+                == listContains(flatten(leftTree), element) || listContains(flatten(rightTree), element) || x == element;
+                == listContains(flatten(leftTree), element) || listContains(Cons(x, flatten(rightTree)), element);
+                == listContains(append(Cons(x, flatten(leftTree)), flatten(rightTree)), element);
+                == listContains(Cons(x, append(flatten(leftTree), flatten(rightTree))), element);
+                == listContains(flatten(tree), element);
+            }
         }
 }
