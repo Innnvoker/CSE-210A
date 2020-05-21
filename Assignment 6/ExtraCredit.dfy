@@ -13,8 +13,26 @@ function eval(e:Exp, store:map<string, int>):int
 function optimize(e:Exp):Exp
 {
 	match e
-	case Const(int) => 
-	case Var(string)
+	case Const(n) => Const(n)
+	case Var(s) => Var(s)
+	case Plus(e1, e2) => 
+		var e1' := optimize(e1);
+		var e2' := optimize(e2);
+		match (e1', e2') {
+			case(Const(a), Const(b)) => Const(a + b)
+			case(Const(a), Var(y)) => if a == 0 then Var(y) else Plus(e1', e2')
+			case(Var(x), Const(b)) => if b == 0 then Var(x) else Plus(e1', e2')
+			case(Var(x), Var(y)) => Plus(e1', e2')
+		}
+	case Mult(e1, e2) => 
+		var e1' := optimize(e1);
+		var e2' := optimize(e2);
+		match (e1', e2') {
+			case(Const(a), Const(b)) => Const(a * b)
+			case(Const(a), Var(y)) => if a == 0 then Const(0) else Mult(e1', e2')
+			case(Var(x), Const(b)) => if b == 0 then Const(0) else Mult(e1', e2')
+			case(Var(x), Var(y)) => Mult(e1', e2')
+		}
 }
 
 //as you write optimize this will become unproved
@@ -22,7 +40,22 @@ function optimize(e:Exp):Exp
 method optimizeCorrect(e:Exp, s:map<string, int>)
 ensures eval(e,s) == eval(optimize(e), s)
 {
+	match e
+	case Const(n) => {}
+	case Var(s) => {}
+	case Plus(e1, e2) => {
+		optimizeCorrect(e1, s);
+		optimizeCorrect(e2, s);
+		assert eval(e, s) 
+		== 
 
+
+	}
+	case Mult(e1, e2) => {
+		optimizeCorrect(e1, s);
+		optimizeCorrect(e2, s);
+
+	}
 }
 
 method optimizeFeatures()
