@@ -21,8 +21,23 @@ function optimize(e:Exp):Exp
 		match (e1', e2') {
 			case(Const(a), Const(b)) => Const(a + b)
 			case(Const(a), Var(y)) => if a == 0 then Var(y) else Plus(e1', e2')
+			case(Const(a), Plus(x', y')) => if a == 0 then Plus(x', y') else Plus(e1', e2')
+			case(Const(a), Mult(x', y')) => if a == 0 then Mult(x', y') else Plus(e1', e2')
+
 			case(Var(x), Const(b)) => if b == 0 then Var(x) else Plus(e1', e2')
 			case(Var(x), Var(y)) => Plus(e1', e2')
+			case(Var(x), Plus(x', y')) => Plus(e1', e2')
+			case(Var(x), Mult(x', y')) => Plus(e1', e2')
+			
+			case(Plus(x', y'), Const(b)) => if b == 0 then Plus(x', y') else Plus(e1', e2')
+			case(Plus(x', y'), Var(y)) => Plus(e1', e2')
+			case(Plus(x', y'), Plus(m', n')) => Plus(e1', e2')
+			case(Plus(x', y'), Mult(m', n')) => Plus(e1', e2')
+
+			case(Mult(x', y'), Const(b)) => if b == 0 then Mult(x', y') else Plus(e1', e2')
+			case(Mult(x', y'), Var(y)) => Plus(e1', e2')
+			case(Mult(x', y'), Plus(m', n')) => Plus(e1', e2')
+			case(Mult(x', y'), Mult(m', n')) => Plus(e1', e2')
 		}
 	case Mult(e1, e2) => 
 		var e1' := optimize(e1);
@@ -30,8 +45,23 @@ function optimize(e:Exp):Exp
 		match (e1', e2') {
 			case(Const(a), Const(b)) => Const(a * b)
 			case(Const(a), Var(y)) => if a == 0 then Const(0) else Mult(e1', e2')
+			case(Const(a), Plus(x', y')) => if a == 0 then Const(0) else Mult(e1', e2')
+			case(Const(a), Mult(x', y')) => if a == 0 then Const(0) else Mult(e1', e2')
+
 			case(Var(x), Const(b)) => if b == 0 then Const(0) else Mult(e1', e2')
 			case(Var(x), Var(y)) => Mult(e1', e2')
+			case(Var(x), Plus(x', y')) => Mult(e1', e2')
+			case(Var(x), Mult(x', y')) => Mult(e1', e2')
+			
+			case(Plus(x', y'), Const(b)) => if b == 0 then Const(0) else Mult(e1', e2')
+			case(Plus(x', y'), Var(y)) => Mult(e1', e2')
+			case(Plus(x', y'), Plus(m', n')) => Mult(e1', e2')
+			case(Plus(x', y'), Mult(m', n')) => Mult(e1', e2')
+
+			case(Mult(x', y'), Const(b)) => if b == 0 then Const(0) else Mult(e1', e2')
+			case(Mult(x', y'), Var(y)) => Mult(e1', e2')
+			case(Mult(x', y'), Plus(m', n')) => Mult(e1', e2')
+			case(Mult(x', y'), Mult(m', n')) => Mult(e1', e2')
 		}
 }
 
@@ -46,8 +76,6 @@ ensures eval(e,s) == eval(optimize(e), s)
 	case Plus(e1, e2) => {
 		optimizeCorrect(e1, s);
 		optimizeCorrect(e2, s);
-		assert eval(e, s) 
-		== 
 
 
 	}
