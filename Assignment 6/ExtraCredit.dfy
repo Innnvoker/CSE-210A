@@ -76,10 +76,20 @@ ensures eval(e,s) == eval(optimize(e), s)
 	case Plus(e1, e2) => {
 		optimizeCorrect(e1, s);
 		optimizeCorrect(e2, s);
+		
+		calc { eval(e, s);
+			== eval(Plus(e1, e2), s);
+			== eval(optimize(e),s);
+		}
 	}
 	case Mult(e1, e2) => {
 		optimizeCorrect(e1, s);
 		optimizeCorrect(e2, s);
+
+		calc { eval(e, s);
+			== eval(Mult(e1, e2), s);
+			== eval(optimize(e),s);
+		}
 	}
 }
 
