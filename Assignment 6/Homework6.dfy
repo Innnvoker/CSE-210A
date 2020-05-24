@@ -35,7 +35,15 @@ ensures listContains(append(xs, ys), element) <==> listContains(xs, element) || 
 {
         match xs
         case Nil => {}
-        case Cons(x, xs') => {}
+        case Cons(x, xs') => {
+                appendListContains(xs', ys, element);
+
+                calc { listContains(append(xs, ys), element);
+                == listContains(Cons(x, append(xs', ys)), element);
+                == x == element || listContains(xs', element) || listContains(ys, element);
+                == listContains(xs, element) || listContains(ys, element);
+                }
+        }
 }
 
 lemma sameElements<T>(tree:Tree<T>, element:T)

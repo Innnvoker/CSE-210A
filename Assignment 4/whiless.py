@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
+import copy
+import sys
 
 class Node:
     def __init__(self, key=None, tf=True, tp=None):
@@ -12,10 +14,14 @@ class Node:
     def printNode(self):
         print(" key: ", self.key, " tf: ", self.tf, " type: ", self.tp)
 
-vars = []
-outVars = []
+count = 0
+flag = 0
+outVars = [[],[]]
 lines = []
 whileArr = []
+outLines = ""
+preState = ""
+postState = ""
 parseTree = Node()
 add = "+"
 minus = "-"
@@ -33,24 +39,50 @@ signs = [add, minus, multi, equal, define, no, lp, rp, more, less, he, huo]
 compare_sign = [more, less, equal]
 
 def build(text):
+    global lines, count, preState, postState, flag, outLines
     divString(text)
-    for line in lines:
-        split(line)
+    for i in range(len(lines)):
+        if lines[i-1] and len(lines) > 1:
+            if no_if_while(lines[i]):
+                postState = build_define(lines[i:])
+            else:
+                if is_define(lines[i-1]):
+                    postState = build_if(lines[i])
+
+                    print_after()
+
+        split(lines[i])
+    add_state(0)
+    add_state(1)
+    if flag != 1:
+        print("⇒ " + outLines)
+    outLines = ''
 
 
 def split(text):
-    global parseTree
+    global parseTree, postState, preState, count, outLines, flag
+    flag = 0
     if "?" in text:
         parseTree = ternary(text)
     elif text[0] == "if":
         parseTree = ifthen(text)
     elif text[0] == "while":
+        preState = build_while(text)[1]
+        postState = build_while(text)[0]
         parseTree = whiledo(text)
     elif text[0] == "skip":
+        flag = 1
         pass
     else:
+        if count > 0:
+            print_after()
+
         parse(text)
+        count += 1
+
+
     parse_tree(parseTree)
+
 
 
 def parse(text):
@@ -155,44 +187,72 @@ def ternary(text):
 
 
 def parse_tree(curr):
-    global outVars
+    global outVars, outLines, preState, postState
     if curr.tp == "ifthenP":
         curr.tf = parse(curr.key)
         if curr.tf:
             if curr.left.tp == "whiledoP":
                 parse_tree(curr.left)
             else:
+                str = listToString(curr.left.key)
+                outLines += restore(str)
+                add_state(1)
+                print("⇒ " + outLines)
+                outLines = ''
+                end()
+
                 parse(curr.left.key)
+
+
         else:
             if curr.right.tp == "whiledoP":
                 parse_tree(curr.right)
             else:
+                str = listToString(curr.right.key)
+                outLines += restore(str)
+                add_state(1)
+                print("⇒ " + outLines)
+                outLines = ''
+                end()
+
                 parse(curr.right.key)
+
     if curr.tp == "whiledoP":
         curr.left.tf = parse(curr.left.key)
         while curr.left.tf:
-            before = outVars
-            # print("before: ", before)
+
+            outLines += preState + "; " + postState
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
+            before = copy.deepcopy(outVars)
             if curr.right.tp == "ifthenP":
                 parse_tree(curr.right)
                 curr.left.tf = parse(curr.left.key)
             else:
                 parse(curr.right.key)
                 curr.left.tf = parse(curr.left.key)
-            after = outVars
-            # print("after: ", after)
+            after = copy.deepcopy(outVars)
             if before == after:
                 break
+
+            print_after()
 
 
 def listToString(ls):
     string = ""
     for a in ls:
-        string += (str(a))
+        if a == None:
+            string += " "
+        else:
+            string += (str(a))
     return string
 
 
 def nameVar(text):
+    # print(text)
     global outVars
     var = text[:text.index(":=")][0]
     val = text[text.index(":=")+1:]
@@ -200,16 +260,25 @@ def nameVar(text):
         val[i] = read_val(val[i])
     val = eval(listToString(val))
     check_exist(var, val)
-
-    lines = printLines()
-    vars = printVar()
-    print("⇒", ",")
-
-
     return True
 
 
 def divString(text):
+    txt = []
+    if text[0] == "{":
+        txt += text[text.index("{") + 1:text.index("}")]
+        if text.index("}") != len(text)-1:
+            txt += text[text.index("}")+1:]
+        text = txt
+
+    if "{" in text and "while" not in text:
+        if text.index("{") != 0:
+            txt += text[:text.index("{")]
+        txt += text[text.index("{") + 1:text.index("}")]
+        if text.index("}") != len(text)-1:
+            txt += text[text.index("}")+1:]
+        text = txt
+
     if "{" in text:
         bText = text[text.index("{"):text.index("}")]
         if ";" in bText:
@@ -232,15 +301,11 @@ def divString(text):
 
 def printVar():
     global outVars
-    if len(outVars) > 1:
-        if outVars[1][0] == "fact":
-            sub = outVars[0]
-            outVars[0] = outVars[1]
-            outVars[1] = sub
+    vars = list(map(list, zip(*sorted(zip(*outVars)))))
     output = ""
-    if outVars:
-        for var in outVars:
-            output += var[0] + " → " + str(var[1]) + ", "
+    if vars:
+        for i in range(len(vars[0])):
+            output += vars[0][i] + " → " + str(vars[1][i]) + ", "
     output = output[:-2]
     return "{" + output + "}"
 
@@ -259,16 +324,12 @@ def is_int(string):
 
 def check_exist(var, val):
     global outVars
-    outVars = np.transpose(np.asarray(outVars))
-    if len(outVars) == 0 or var not in outVars[0]:
-        outVars = np.transpose(outVars)
-        outVars = outVars.tolist()
-        outVars.append([var, val])
+    if len(outVars[0]) == 0 or var not in outVars[0]:
+        outVars[0].append(var)
+        outVars[1].append(val)
     else:
-        id = np.where(outVars[0] == var)
+        id = outVars[0].index(var)
         outVars[1][id] = val
-        outVars = np.transpose(outVars)
-        outVars = outVars.tolist()
 
 
 def read_val(var):
@@ -278,20 +339,16 @@ def read_val(var):
     elif var in signs:
         return var
     else:
-        outVars = np.transpose(np.asarray(outVars))
-        if len(outVars) == 0 or var not in outVars[0]:
-            outVars = np.transpose(outVars)
-            outVars = outVars.tolist()
+        if len(outVars[0]) == 0 or var not in outVars[0]:
             return 0
         else:
-            id = np.where(outVars[0] == var)
+            id = outVars[0].index(var)
             val = outVars[1][id]
-            outVars = np.transpose(outVars)
-            outVars = outVars.tolist()
             return int(val)
 
 
 def compare(a, b, sign):
+
     if is_int(a):
         val_a = int(a)
         val_b = read_val(b)
@@ -336,9 +393,175 @@ def print_tree(curr):
         print_tree(curr.right)
 
 
+def restore(str):
+    if len(str) == 4:
+        return str[0] + " := " + str[3]
+    else:
+        return str[0] + " := (" + str[3:] + ")"
+
+
+def add_state(num):
+    global outLines
+    # 0 means skip
+    if num == 0:
+        outLines += "skip"
+    # 1 means var declare
+    elif num == 1:
+        if len(outLines) > 0:
+            outLines += ", " + printVar()
+
+
+def build_state(num):
+    pass
+
+
+def build_if(text):
+    arrif = text[text.index("if")+1:text.index("then")]
+    arrthen = text[text.index("then")+1:text.index("else")]
+    arrelse = text[text.index("else")+1:]
+    if len(arrif) == 1 or no in arrif:
+        pass
+    else:
+        dex = 0
+        if "<" in arrif:
+            dex = arrif.index("<")
+        if ">" in arrif:
+            dex = arrif.index(">")
+        if "=" in arrif:
+            dex = arrif.index("=")
+
+        if len(arrif) > dex + 3:
+            arrif.insert(dex+1, lp)
+            arrif.insert(len(arrif), rp)
+
+        if arrif[0] != "(":
+            arrif.insert(0, lp)
+            arrif.insert(len(arrif), rp)
+
+    if arrthen[0] != "{":
+        arrthen.insert(0, "{")
+        arrthen.insert(len(arrthen), "}")
+    dex = arrthen.index(":=")
+    arrthen.insert(dex, None)
+    arrthen.insert(dex+2, None)
+    if arrthen.index("}") - arrthen.index(":=") > 3:
+        arrthen.insert(arrthen.index(":=")+2, lp)
+        arrthen.insert(arrthen.index("}"), rp)
+    arrthen.insert(arrthen.index("{")+1, None)
+    arrthen.insert(arrthen.index("}"), None)
+
+    if arrelse[0] != "{":
+        arrelse.insert(0, "{")
+        arrelse.insert(len(arrelse), "}")
+    dex = arrelse.index(":=")
+    arrelse.insert(dex, None)
+    arrelse.insert(dex+2, None)
+    if arrelse.index("}") - arrelse.index(":=") > 3:
+        arrelse.insert(arrelse.index(":=")+2, lp)
+        arrelse.insert(arrelse.index("}"), rp)
+    arrelse.insert(arrelse.index("{")+1, None)
+    arrelse.insert(arrelse.index("}"), None)
+
+    if_state = "if " + listToString(arrif) + " then " + listToString(arrthen) + " else " + listToString(arrelse)
+    return if_state
+
+
+def build_while(text):
+    arrwhile = text[text.index("while") + 1:text.index("do")]
+    arrdo = text[text.index("do") + 1:]
+    if len(arrwhile) == 1 or no in arrwhile:
+        pass
+    else:
+        dex = 0
+        if "<" in arrwhile:
+            dex = arrwhile.index("<")
+        if ">" in arrwhile:
+            dex = arrwhile.index(">")
+        if "=" in arrwhile:
+            dex = arrwhile.index("=")
+
+        if len(arrwhile) > dex + 3:
+            arrwhile.insert(dex+1, lp)
+            arrwhile.insert(len(arrwhile), rp)
+
+        if arrwhile[0] != "(":
+            arrwhile.insert(0, lp)
+            arrwhile.insert(len(arrwhile), rp)
+
+    if arrdo[0] != "{":
+        arrdo.insert(0, "{")
+        arrdo.insert(len(arrdo), "}")
+    dex = arrdo.index(":=")
+    arrdo.insert(dex, None)
+    arrdo.insert(dex+2, None)
+    if arrdo.index("}") - arrdo.index(":=") > 3:
+        arrdo.insert(arrdo.index(":=")+2, lp)
+        arrdo.insert(arrdo.index("}"), rp)
+    arrdo.insert(arrdo.index("{")+1, None)
+    arrdo.insert(arrdo.index("}"), None)
+    while_state = "while " + listToString(arrwhile) + " do " + listToString(arrdo)
+    do_state = listToString(arrdo)
+    do_state = do_state[2:len(do_state)-2]
+    return while_state, do_state
+
+
+def build_define(ls):
+    output = []
+    for ele in ls:
+        if no_if_while(ele):
+            output.append(ele[0])
+            output.append(None)
+            output.append(ele[1])
+            output.append(None)
+            output.append(ele[2])
+            output.append(";")
+            output.append(None)
+        if "while" in ele:
+            output.append(build_while(ele)[0])
+    return listToString(output)[:-2]
+
+
+def no_if_while(ls):
+    if "if" in ls:
+        return False
+    if "while" in ls:
+        return False
+    return True
+
+
+def is_define(ls):
+    if ls[1] == ":=":
+        return True
+    return False
+
+
+def end():
+    global count
+    count += 1
+    if count == 10000:
+        sys.exit()
+
+
+def print_after():
+    global outLines
+    add_state(0)
+    outLines += "; " + postState
+    add_state(1)
+    print("⇒ " + outLines)
+    outLines = ''
+    end()
+
+    outLines += postState
+    add_state(1)
+    print("⇒ " + outLines)
+    outLines = ''
+    end()
+
+
 def main():
     text = input().split()
     build(text)
+
 
 
 if __name__ == '__main__':

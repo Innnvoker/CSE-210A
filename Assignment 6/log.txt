@@ -1,3 +1,15 @@
+commit 8a448d59238f865739b6299b6e2d969bc36dff0f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 21 22:42:41 2020 -0700
+
+    did the proof for extraCredit
+
+commit fd24167b91219e68b3d5cb75fd2a5ebf7ef2fa37
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 21 09:30:10 2020 -0700
+
+    hw6 done
+
 commit 39ed96c60f27a0329f77043491a877a7aa3557a9
 Author: Yu Ji <jessejiyu@outlook.com>
 Date:   Thu May 21 09:28:49 2020 -0700
