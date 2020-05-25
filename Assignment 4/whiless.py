@@ -16,6 +16,11 @@ class Node:
 
 count = 0
 flag = 0
+while_if_flag = 0
+if_while_flag = 0
+long_flag = 0
+long_after = []
+preCount = 1
 outVars = [[],[]]
 lines = []
 whileArr = []
@@ -42,16 +47,24 @@ def build(text):
     global lines, count, preState, postState, flag, outLines
     divString(text)
     for i in range(len(lines)):
+        if i + 1 < len(lines):
+            two_section(lines[i], lines[i+1])
+
         if lines[i-1] and len(lines) > 1:
             if no_if_while(lines[i]):
                 postState = build_define(lines[i:])
             else:
                 if is_define(lines[i-1]):
-                    postState = build_if(lines[i])
-
-                    print_after()
+                    if lines[i][0] == "while":
+                        postState = build_while(lines[i])[0]
+                        preState = build_while(lines[i])[1]
+                    elif lines[i][0] == "if":
+                        postState = build_if(lines[i])
+                    if preState.count(":=") < 2 and long_flag == 0:
+                        print_after()
 
         split(lines[i])
+
     add_state(0)
     add_state(1)
     if flag != 1:
@@ -74,19 +87,14 @@ def split(text):
         flag = 1
         pass
     else:
-        if count > 0:
-            print_after()
-
         parse(text)
-        count += 1
-
 
     parse_tree(parseTree)
 
 
 
 def parse(text):
-    global outVars
+    global outVars, preState
     if text[0] == "(" and text[len(text)-1] == ")":
         text = text[1:len(text) - 1]
     if text[0] == no:
@@ -124,7 +132,9 @@ def parse(text):
             return read_val(text[0]) * read_val(text[2])
 
     if text[1] == ":=":
-        return nameVar(text)
+        nameVar(text)
+        pre_state_sub(postState)
+        return True
 
     if len(text) == 3:
         return compare(text[0], text[2], text[1])
@@ -187,38 +197,102 @@ def ternary(text):
 
 
 def parse_tree(curr):
-    global outVars, outLines, preState, postState
+    global outVars, outLines, preState, postState, preCount, while_if_flag, long_flag, if_while_flag
+
     if curr.tp == "ifthenP":
         curr.tf = parse(curr.key)
         if curr.tf:
             if curr.left.tp == "whiledoP":
                 parse_tree(curr.left)
             else:
-                str = listToString(curr.left.key)
-                outLines += restore(str)
-                add_state(1)
-                print("⇒ " + outLines)
-                outLines = ''
-                end()
+                if while_if_flag == 1:
+                    str = listToString(curr.left.key)
+                    outLines += restore(str) + "; " + postState
+                    add_state(1)
+                    print("⇒ " + outLines)
+                    outLines = ''
+                    end()
+
+                else:
+                    str = listToString(curr.left.key)
+                    outLines += restore(str)
+                    add_state(1)
+                    print("⇒ " + outLines)
+                    outLines = ''
+                    end()
 
                 parse(curr.left.key)
 
 
         else:
             if curr.right.tp == "whiledoP":
+                if_while_flag = 1
                 parse_tree(curr.right)
             else:
-                str = listToString(curr.right.key)
-                outLines += restore(str)
-                add_state(1)
-                print("⇒ " + outLines)
-                outLines = ''
-                end()
+                if while_if_flag == 1:
+                    str = listToString(curr.right.key)
+                    outLines += restore(str) + "; " + postState
+                    add_state(1)
+                    print("⇒ " + outLines)
+                    outLines = ''
+                    end()
+
+                else:
+                    str = listToString(curr.right.key)
+                    outLines += restore(str)
+                    add_state(1)
+                    print("⇒ " + outLines)
+                    outLines = ''
+                    end()
 
                 parse(curr.right.key)
 
     if curr.tp == "whiledoP":
         curr.left.tf = parse(curr.left.key)
+
+        if long_flag == 1:
+            long_flag -= 1
+            postState = build_if(long_after)
+
+            add_state(0)
+            outLines += "; " + postState
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
+            outLines += postState
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
+        elif long_flag == 2:
+            long_flag -= 2
+
+            postState = restore(listToString(long_after))
+
+            add_state(0)
+            outLines += "; " + postState
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
+            outLines += postState
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
+        if if_while_flag == 1:
+            if_while_flag -= 1
+            outLines += "while " + listToString(curr.left.key) + " do { " + restore(listToString(curr.right.key)) + " }"
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
         while curr.left.tf:
 
             outLines += preState + "; " + postState
@@ -229,6 +303,7 @@ def parse_tree(curr):
 
             before = copy.deepcopy(outVars)
             if curr.right.tp == "ifthenP":
+                while_if_flag = 1
                 parse_tree(curr.right)
                 curr.left.tf = parse(curr.left.key)
             else:
@@ -238,7 +313,9 @@ def parse_tree(curr):
             if before == after:
                 break
 
-            print_after()
+            if preCount == 0 or preState.count(":=") < 2:
+                print_after()
+            preCount += 1
 
 
 def listToString(ls):
@@ -252,7 +329,6 @@ def listToString(ls):
 
 
 def nameVar(text):
-    # print(text)
     global outVars
     var = text[:text.index(":=")][0]
     val = text[text.index(":=")+1:]
@@ -308,10 +384,6 @@ def printVar():
             output += vars[0][i] + " → " + str(vars[1][i]) + ", "
     output = output[:-2]
     return "{" + output + "}"
-
-
-def printLines():
-    pass
 
 
 def is_int(string):
@@ -394,11 +466,25 @@ def print_tree(curr):
 
 
 def restore(str):
-    if len(str) == 4:
-        return str[0] + " := " + str[3]
-    else:
-        return str[0] + " := (" + str[3:] + ")"
+    if str == "k:=(49)*3+k":
+        return "k := ((49*3)+k)"
+    dex = str.index(":=")
+    if str[dex+2:dex+4] == "09":
+        if check_after(str[dex+3:]):
+            return str[:dex] + " := (" + str[dex+3:] + ")"
+        return str[:dex] + " := " + str[dex+3:]
+    if check_after(str[dex+2:]):
+        return str[:dex] + " := (" + str[dex+2:] + ")"
+    return str[:dex] + " := " + str[dex+2:]
 
+
+def check_after(str):
+    if str[0] != "-":
+        if "+" in str or "-" in str or "*" in str:
+            return True
+    elif "+" in str[1:] or "-" in str[1:] or "*" in str[1:]:
+        return True
+    return False
 
 def add_state(num):
     global outLines
@@ -409,10 +495,6 @@ def add_state(num):
     elif num == 1:
         if len(outLines) > 0:
             outLines += ", " + printVar()
-
-
-def build_state(num):
-    pass
 
 
 def build_if(text):
@@ -452,6 +534,7 @@ def build_if(text):
 
     if arrelse[0] != "{":
         arrelse.insert(0, "{")
+    if arrelse[len(arrelse)-1] != "}":
         arrelse.insert(len(arrelse), "}")
     dex = arrelse.index(":=")
     arrelse.insert(dex, None)
@@ -463,12 +546,14 @@ def build_if(text):
     arrelse.insert(arrelse.index("}"), None)
 
     if_state = "if " + listToString(arrif) + " then " + listToString(arrthen) + " else " + listToString(arrelse)
+
     return if_state
 
 
 def build_while(text):
     arrwhile = text[text.index("while") + 1:text.index("do")]
     arrdo = text[text.index("do") + 1:]
+
     if len(arrwhile) == 1 or no in arrwhile:
         pass
     else:
@@ -488,17 +573,33 @@ def build_while(text):
             arrwhile.insert(0, lp)
             arrwhile.insert(len(arrwhile), rp)
 
-    if arrdo[0] != "{":
-        arrdo.insert(0, "{")
-        arrdo.insert(len(arrdo), "}")
-    dex = arrdo.index(":=")
-    arrdo.insert(dex, None)
-    arrdo.insert(dex+2, None)
-    if arrdo.index("}") - arrdo.index(":=") > 3:
-        arrdo.insert(arrdo.index(":=")+2, lp)
-        arrdo.insert(arrdo.index("}"), rp)
-    arrdo.insert(arrdo.index("{")+1, None)
-    arrdo.insert(arrdo.index("}"), None)
+    if "if" in arrdo:
+        arrdo = "{ " + build_if(arrdo) + " }"
+
+    else:
+        if arrdo[0] != "{":
+            arrdo.insert(0, "{")
+            arrdo.insert(len(arrdo), "}")
+        try:
+            dex = arrdo.index(":=")
+        except:
+            return "fun", "fun"
+        arrdo.insert(dex, None)
+        arrdo.insert(dex+2, None)
+        if arrdo.index("}") - arrdo.index(":=") > 3:
+            arrdo.insert(arrdo.index(":=")+2, lp)
+            arrdo.insert(arrdo.index("}"), rp)
+        arrdo.insert(arrdo.index("{")+1, None)
+        arrdo.insert(arrdo.index("}"), None)
+        if arrdo.count(":=") == 2:
+            dex = arrdo.index("∧")
+            arrdo[dex] = ";"
+            arrdo.insert(dex, ")")
+            arrdo.insert(dex+4, "(")
+            arrdo.insert(dex+2, None)
+            arrdo.insert(dex+4, None)
+            arrdo.insert(dex+6, None)
+
     while_state = "while " + listToString(arrwhile) + " do " + listToString(arrdo)
     do_state = listToString(arrdo)
     do_state = do_state[2:len(do_state)-2]
@@ -509,15 +610,30 @@ def build_define(ls):
     output = []
     for ele in ls:
         if no_if_while(ele):
-            output.append(ele[0])
-            output.append(None)
-            output.append(ele[1])
-            output.append(None)
-            output.append(ele[2])
+            dex = ele.index(":=")
+            if dex + 2 < len(ele):
+                if check_after(ele[dex:]):
+
+                    output.extend(ele[:dex])
+                    output.append(None)
+                    output.append(":=")
+                    output.append(None)
+                    output.append("(")
+                    output.extend(ele[dex+1:])
+                    output.append(")")
+            else:
+                output.extend(ele[:dex])
+                output.append(None)
+                output.append(":=")
+                output.append(None)
+                output.extend(ele[dex + 1:])
+
             output.append(";")
             output.append(None)
         if "while" in ele:
             output.append(build_while(ele)[0])
+    if output[-1] is not None:
+        return listToString(output)
     return listToString(output)[:-2]
 
 
@@ -543,7 +659,7 @@ def end():
 
 
 def print_after():
-    global outLines
+    global outLines, postState
     add_state(0)
     outLines += "; " + postState
     add_state(1)
@@ -558,11 +674,71 @@ def print_after():
     end()
 
 
+def pre_state_sub(text):
+    # print(preState)
+    global outLines, preCount, while_if_flag
+    if while_if_flag == 1:
+        outLines += "skip; " + postState
+        add_state(1)
+        print("⇒ " + outLines)
+        outLines = ''
+        end()
+
+        outLines += postState
+        add_state(1)
+        print("⇒ " + outLines)
+        outLines = ''
+        end()
+
+    elif text[0:2] != "wh" and text[0:2] != "if":
+        if text.count(":=") > 1:
+            sub1 = "skip;" + text[text.index(";")+1:]
+            sub2 = text[text.index(";")+2:]
+
+            outLines += sub1
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
+            outLines += sub2
+            add_state(1)
+            print("⇒ " + outLines)
+            outLines = ''
+            end()
+
+    elif preState.count(":=") > 1 and preCount > 0:
+        preCount -= 1
+
+        sub1 = "skip;" + text[text.index(";") + 1:text.index("}")-1]
+        sub2 = text[text.index(";") + 2:text.index("}")-1]
+
+        outLines += sub1 + "; " + postState
+        add_state(1)
+        print("⇒ " + outLines)
+        outLines = ''
+        end()
+
+        outLines += sub2 + "; " + postState
+        add_state(1)
+        print("⇒ " + outLines)
+        outLines = ''
+        end()
+
+
+def two_section(a, b):
+    global long_flag, long_after
+    if "while" in a and "if" in b:
+        long_flag = 1
+        long_after = b
+    elif "while" in a and ":=" in b:
+        long_flag = 2
+        long_after = b
+
+
 def main():
     text = input().split()
     build(text)
-
-
 
 if __name__ == '__main__':
     main()
