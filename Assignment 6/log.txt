@@ -1,0 +1,228 @@
+commit 6dcfa1c16309716c86a034f0877640f3f00572d2
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 28 19:14:15 2020 -0700
+
+    hw6 done
+
+commit d50ffd0363166625098b11cb836fc8ec8eefd886
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Sun May 24 22:43:53 2020 -0700
+
+    hw4 done
+
+commit db67dc04854e327a837bbc969fb853c5e637728f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Sun May 24 22:42:34 2020 -0700
+
+    done
+
+commit b3ce5fb28ffe926b8b52069cc2cc2cde7e7741ba
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Sun May 24 03:18:24 2020 -0700
+
+    hw4 easy passed
+
+commit 8a448d59238f865739b6299b6e2d969bc36dff0f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 21 22:42:41 2020 -0700
+
+    did the proof for extraCredit
+
+commit fd24167b91219e68b3d5cb75fd2a5ebf7ef2fa37
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 21 09:30:10 2020 -0700
+
+    hw6 done
+
+commit 39ed96c60f27a0329f77043491a877a7aa3557a9
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 21 09:28:49 2020 -0700
+
+    add report
+
+commit d85dc6c6d0be59efff750ec11713fce226ead109
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 21 09:23:19 2020 -0700
+
+    extra is working without proof
+
+commit 63f460206e15a10ce65652ca1434ecf85f13516e
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu May 21 08:37:36 2020 -0700
+
+    with one error left
+
+commit 3f37198c849c3bb5e2bbcde6657c024c8d051cc6
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 20 23:31:25 2020 -0700
+
+    working on the extraCredit
+
+commit d8113d3944ba3169853edd8608b3f80788a9b9fa
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 20 16:00:49 2020 -0700
+
+    hw6 seems to be done
+
+commit 5f50545de326805c933ba182e61851770f650e94
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 20 00:10:40 2020 -0700
+
+    hw6 left with one error
+
+commit 4dd08b87647d8c12b8b270a76dc51e76e13c5084
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Tue May 19 20:01:30 2020 -0700
+
+    hw6 working on the last one
+
+commit 10460b97c55a8145eb6d4adfa395427ef99cda92
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Mon May 18 23:51:44 2020 -0700
+
+    half way done
+
+commit 6c0bb739fbf4f97775848d4f7af301911987cda7
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Mon May 18 22:18:57 2020 -0700
+
+    dafny
+
+commit 73bbb80ee31850ce80fd2b73e20509a3ffbb746e
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Sun May 17 10:00:04 2020 -0700
+
+    copy from hw2
+
+commit 296bc8e146d30f154768c07b6bf079e5e94de0d0
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Sat May 16 11:23:34 2020 -0700
+
+    start 4
+
+commit 54568a306dfcbe10acbf15cced4d36264915265f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Sat May 16 10:55:00 2020 -0700
+
+    fix makefile
+
+commit 791704239311be9c3970d2cb2e39f801a42a5579
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 13 23:50:31 2020 -0700
+
+    add gitlog
+
+commit d1e257c97d33a8f26b251e7ea582478739e59adf
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 13 23:47:36 2020 -0700
+
+    done assignment 2
+
+commit ec20a5fb8b53107ac44ff576b50b6b6e0ef3e55d
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Tue May 12 19:15:32 2020 -0700
+
+    medium 0.9
+
+commit 2c337bd2e17810c5acee4d3c859c91ffb13b7560
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Tue May 12 00:03:45 2020 -0700
+
+    easy done
+
+commit 8c3b68793adf02943f36c9f64b93218f2e6c7e86
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed May 6 20:46:34 2020 -0700
+
+    easy cases
+
+commit 69f62669124937c18402506a506b10dd525985a0
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed Apr 22 15:27:49 2020 -0700
+
+    split the input
+
+commit 7699ca9c6134346ce525bd7f920929286aaae59a
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Wed Apr 22 09:08:50 2020 -0700
+
+    start
+
+commit b6a6ab319c2bfa0a691c9e7a12acfe0ac8a9d91c
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:07:08 2020 -0700
+
+    update gitlog
+
+commit 65170252b9e88470cc1beefdfa2342682a6f4663
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:06:30 2020 -0700
+
+    fix readme
+
+commit 24cedcf7d5e82b89da0f2dcf2480dce52a50cf1b
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 18:02:46 2020 -0700
+
+    finished
+
+commit 884439367a30ae112d019263da57359d2644969f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:52:40 2020 -0700
+
+    finished
+
+commit 846ed191810f1b5834cc5f758de8b74beaf55dc6
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:51:04 2020 -0700
+
+    finished
+
+commit 3907f7a33303e08ab801db8e239528fcb6c479ad
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Fri Apr 10 17:14:06 2020 -0700
+
+    Update README.md
+
+commit f242d13d448602c62a96d119bfbd13141e149ec0
+Merge: b7baa3a bd9ae86
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:12:08 2020 -0700
+
+    almost done
+
+commit b7baa3a818e686b7ce77d1c2f60282b56269d501
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 17:10:35 2020 -0700
+
+    almost finished
+
+commit bd9ae8615bc5bf58ebc82936cc386c7439b93ee3
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Fri Apr 10 11:05:49 2020 -0700
+
+    Update README.md
+
+commit 8092988abee61bd8a22e8343e660aebdff21864d
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 11:04:02 2020 -0700
+
+    program is finished
+
+commit 04d46e6f818d406b3479d55a09cd2aa1b04e3cbd
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Fri Apr 10 01:46:02 2020 -0700
+
+    addition is working now
+
+commit f19409f98db70cf18c9285835512cf001f9a739f
+Author: Yu Ji <jessejiyu@outlook.com>
+Date:   Thu Apr 9 19:23:30 2020 -0700
+
+    setup
+
+commit 640870aff32c55450d7da667f0d903db2f5b87dd
+Author: Yu <46361354+Innnvoker@users.noreply.github.com>
+Date:   Thu Apr 9 17:59:23 2020 -0700
+
+    Initial commit
