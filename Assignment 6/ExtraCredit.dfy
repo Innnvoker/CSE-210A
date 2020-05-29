@@ -111,3 +111,5 @@ method optimizeFeatures()
 	assert( optimize(Plus(Plus(Var("x"), Var("y")), Const(0))) == Plus(Var("x"), Var("y")) );
 	
 }
+
+// method Main() {}
